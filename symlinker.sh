@@ -20,9 +20,9 @@ function createSymLink() {
 		fi
 	elif [ -e $old_loc ]; then
 		echo "$program_name exists in $old_loc but is not linked, creating a new link..."
-		cp -ai $old_loc $(dirname "$new_loc")
-		rm -rfi $old_loc
-		ln -sf $new_loc ~/.config/
+		cp -ai $old_loc $(dirname "$new_loc")                # Copy old files to new dotfiles repo
+		mv $old_loc ~/.config/backups/$(basename "$old_loc") # Create backup
+		ln -sf $new_loc ~/.config/                           # Create symlink
 	else
 		echo "$program_name not found in $old_loc, creating a new link..."
 		ln -sf $new_loc ~/.config/
@@ -32,3 +32,4 @@ function createSymLink() {
 
 createSymLink "Alacritty" ~/.config/alacritty ~/dotfiles/terminal/alacritty
 createSymLink "Nvim" ~/.config/nvim ~/dotfiles/apps/nvim
+createSymLink "Hypr" ~/.config/hypr ~/dotfiles/wayland/hypr
